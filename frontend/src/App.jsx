@@ -48,13 +48,18 @@ export default function App() {
   const handleReview = async () => {
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:3000/ai/get-review", {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3000";
+      const res = await axios.post(`${apiUrl}/ai/get-review`, {
         code,
         language,
       });
       setReview(res.data);
     } catch (err) {
-      setReview("Error fetching review. Is the backend running?");
+      if (err.response && err.response.data) {
+        setReview(err.response.data);
+      } else {
+        setReview("Error fetching review. Is the backend running?");
+      }
     } finally {
       setLoading(false);
     }

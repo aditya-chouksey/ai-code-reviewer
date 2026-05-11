@@ -4,7 +4,7 @@ require("dotenv").config();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",
+  model: "gemini-2.5-flash",
   systemInstruction: `You are an expert code reviewer with 7+ years of development experience.
 Your job is to help students learn DSA by:
 - do not give to much info just encourage coders and support them by give small suggestions

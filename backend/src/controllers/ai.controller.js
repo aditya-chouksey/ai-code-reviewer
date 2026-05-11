@@ -16,6 +16,14 @@ module.exports.getReview = async (req, res) => {
     res.status(200).send(response);
   } catch (error) {
     console.error("Error in getReview:", error);
-    res.status(500).json({ error: "Something went wrong while processing the code review." });
+    
+    let errorMessage = "Something went wrong while processing the code review.";
+    if (error.status === 429) {
+      errorMessage = "Too Many Requests! Google's AI rate limit was reached. Please wait a minute before trying again.";
+    } else if (error.message) {
+      errorMessage = `AI Error: ${error.message}`;
+    }
+
+    res.status(500).send(errorMessage);
   }
 };
